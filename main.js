@@ -141,6 +141,11 @@ function writeFrameToScreen(frame) {
   process.stdout.uncork();
 }
 
+function playAudio(){
+  const audio = spawn('mpg123',['badapple.mp3']);  
+  return audio;
+}
+
 program
   .version('0.0.1')
   .command('play <input-video>')
@@ -155,7 +160,7 @@ program
     const decode = decodeBGRAStream(video, frameSize);
 
     const frameDechunker = chunksToRawFramesOfSize(frameSize.w, frameSize.h);
-
+    const audio = playAudio();
     const asciiOptions = {};
 
     for await (const frame of frameDechunker(decode.stdout)) {
